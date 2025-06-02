@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendar Consulta</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container">
+    <h1>Agendar Consulta</h1>
+    <form action="/agendar" method="POST">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required><br>
+
+      <label for="advogado">Advogado:</label>
+      <input type="text" id="advogado" name="advogado" required><br>
+
+      <label for="data">Data:</label>
+      <input type="date" id="data" name="data" required><br>
+
+      <label for="hora">Hora:</label>
+      <input type="time" id="hora" name="hora" required><br>
+
+      <label for="recorrencia">Recorrência:</label>
+      <select name="recorrencia" id="recorrencia">
+        <option value="único">Único</option>
+        <option value="recorrente">Recorrente</option>
+      </select><br>
+
+      <button type="submit" class="btn btn-success">Salvar</button>
+    </form>
+    <br>
+    <a href="/" class="btn btn-warning">Voltar para Início</a>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fila de Atendimento</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container">
+    <h1>Fila de Atendimento</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Advogado</th>
+          <th>Data</th>
+          <th>Hora</th>
+          <th>Recorrência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% agendamentos.forEach(a => { %>
+          <tr>
+            <td><%= a.nome %></td>
+            <td><%= a.advogado %></td>
+            <td><%= a.data %></td>
+            <td><%= a.hora %></td>
+            <td><%= a.recorrencia %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <br>
+    <a href="/" class="btn btn-warning">Voltar para Início</a>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

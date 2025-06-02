@@ -1,0 +1,36 @@
+const fs = require('fs');
+const EventEmitter = require('events');
+
+// Criando um emissor de eventos
+class EnergiaEmitter extends EventEmitter {}
+const energia = new EnergiaEmitter();
+
+// Arquivos
+const arquivoEntrada = 'entrada_energia.txt';
+const arquivoSaida = 'saida_energia.txt';
+
+// Eventos personalizados
+energia.on('falha', (erro) => {
+  console.error('🚨 Falha detectada na transmissão de energia:', erro.message);
+  fs.appendFileSync('log_eventos.txt', `[${new Date().toISOString()}] Falha: ${erro.message}\n`);
+});
+
+energia.on('sucesso', () => {
+  console.log('⚡ Energia restaurada com sucesso em Codeverse!');
+  fs.appendFileSync('log_eventos.txt', `[${new Date().toISOString()}] Sucesso: Energia restaurada\n`);
+});
+
+// Verifica se o arquivo de entrada existe antes de continuar
+if (!fs.existsSync(arquivoEntrada)) {
+  energia.emit('falha', new Error('Arquivo de entrada não encontrado. A energia não pode fluir!'));
+} else {
+  // Criar os streams de leitura e escrita
+  const leituraStream = fs.createReadStream(arquivoEntrada);
+  const escritaStream = fs.createWriteStream(arquivoSaida);
+
+  leituraStream
+    .on('error', (err) => energia.emit('falha', err))
+    .pipe(escritaStream)
+    .on('error', (err) => energia.emit('falha', err))
+    .on('finish', () => energia.emit('sucesso'));
+}

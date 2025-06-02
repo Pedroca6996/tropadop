@@ -1,0 +1,16 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Trabalhando com Streams para Leitura e Escrita Eficientes
+//Exemplo de Leitura e Escrita ao Mesmo Tempo (Pipe)
+
+const fs = require('fs');
+const leituraStream = fs.createReadStream('entrada.txt');
+const escritaStream = fs.createWriteStream('saida.txt');
+leituraStream.pipe(escritaStream);
+leituraStream.on('end', () => {
+    console.log("Arquivo copiado com sucesso!");
+});
+/**
+Explicação:
+
+O método .pipe() transfere dados automaticamente de um stream de leitura para um de escrita, sem precisar armazenar tudo na memória.
+Ideal para cópias de arquivos e transferência de dados em rede.
+**/ 

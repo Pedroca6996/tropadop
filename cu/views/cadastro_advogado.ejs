@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Advogado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container mt-5">
+    <h2>Cadastrar Novo Advogado</h2>
+    <form action="/advogados/cadastro" method="POST">
+      <div class="mb-3">
+        <label for="nome_completo" class="form-label">Nome Completo</label>
+        <input type="text" class="form-control" id="nome_completo" name="nome_completo" required>
+      </div>
+      <div class="mb-3">
+        <label for="telefone" class="form-label">Telefone</label>
+        <input type="tel" class="form-control" id="telefone" name="telefone">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="especialidade" class="form-label">Especialidade (Opcional)</label>
+        <input type="text" class="form-control" id="especialidade" name="especialidade">
+      </div>
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+      <a href="/advogados/lista" class="btn btn-secondary">Ver Lista de Advogados</a>
+    </form>
+  </div>
+  <%- include('partials/footer') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

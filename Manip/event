@@ -1,0 +1,14 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Manipulação de Eventos
+
+const EventEmitter = require('events'); // Importa o módulo de eventos
+const meuEmissor = new EventEmitter(); // Cria um emissor de eventos
+// Definir um listener (ouvinte) para o evento 'mensagem'
+meuEmissor.on('mensagem', (conteudo) => {
+    console.log(`Nova mensagem recebida: ${conteudo}`);
+});
+
+// Emitir o evento 'mensagem'
+meuEmissor.emit('mensagem', "Olá, este é um evento do Node.js!");
+
+//Saída esperada:
+//Nova mensagem recebida: Olá, este é um evento do Node.js!

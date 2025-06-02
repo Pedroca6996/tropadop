@@ -1,0 +1,38 @@
+/* style.css */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #8b7f7f;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.navbar {
+  background-color: #121212; /* preto metálico opaco */
+  color: #e0e0e0;
+}
+
+.navbar .navbar-brand,
+.navbar .btn-outline-light {
+  color: #e0e0e0; /* texto claro para contraste */
+}
+
+.navbar .btn-outline-light:hover {
+  color: #fff;
+  background-color: #333333; /* leve destaque no hover */
+  border-color: #444444;
+}
+
+footer {
+  background-color: #121212; /* preto metálico opaco */
+  color: white;
+  padding: 20px 0;
+  font-size: 0.9rem;
+  text-align: center; /* centraliza o texto */
+}

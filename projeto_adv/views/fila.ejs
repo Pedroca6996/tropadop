@@ -1,0 +1,38 @@
+<%- include('partials/head') %>
+
+<h2>Fila de Atendimentos</h2>
+
+<% if (agendamentos.length > 0) { %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Advogado</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Recorrente</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% agendamentos.forEach(ag => { %>
+        <tr>
+          <td><%= ag.nome %></td>
+          <td><%= ag.advogado %></td>
+          <td><%= ag.data %></td>
+          <td><%= ag.hora %></td>
+          <td><%= ag.recorrente %></td>
+          <td>
+  <form action="/cancelar/<%= ag.id %>" method="POST" onsubmit="return confirm('Tem certeza que deseja cancelar este agendamento?');">
+    <button class="btn btn-sm btn-danger">Cancelar</button>
+  </form>
+</td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>Nenhum agendamento ainda.</p>
+<% } %>
+
+<%- include('partials/footer') %>

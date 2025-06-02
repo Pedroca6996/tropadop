@@ -1,0 +1,44 @@
+<%- include('partials/head') %>
+
+<form method="POST" action="/perfil/atualizar">
+  <div class="mb-3">
+    <label>Nome Completo</label>
+    <input type="text" name="nome" value="<%= usuario.nome || '' %>" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label>Data de Nascimento</label>
+    <input type="date" name="data_nascimento" value="<%= usuario.data_nascimento || '' %>" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label>Endereço</label>
+    <input type="text" name="endereco" value="<%= usuario.endereco || '' %>" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label>Email</label>
+    <input type="email" name="email" value="<%= usuario.email || '' %>" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label>Telefone</label>
+    <input type="text" name="telefone" value="<%= usuario.telefone || '' %>" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label>Preferências de Notificação</label>
+    <select name="preferencias" class="form-control">
+      <option value="email" <%= usuario.preferencias === 'email' ? 'selected' : '' %>>Email</option>
+      <option value="sms" <%= usuario.preferencias === 'sms' ? 'selected' : '' %>>SMS</option>
+    </select>
+  </div>
+  <hr>
+  <div class="mb-3">
+    <label>Nova Senha (opcional)</label>
+    <input type="password" name="novaSenha" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label>Confirmar Senha</label>
+    <input type="password" name="confirmarSenha" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+</form>
+
+
+<%- include('partials/footer') %>

@@ -1,0 +1,23 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Trabalhando com Streams para Leitura e Escrita Eficientes
+//Exemplo de Leitura de Arquivo com Readable Streams
+
+const fs = require('fs');
+const leituraStream = fs.createReadStream('arquivo.txt', { encoding: 'utf8' });
+leituraStream.on('data', (chunk) => {
+    console.log("Lendo chunk de dados:");
+    console.log(chunk);
+});
+
+leituraStream.on('end', () => {
+    console.log("Leitura completa!");
+});
+
+leituraStream.on('error', (erro) => {
+    console.error("Erro na leitura:", erro);
+});
+
+/** Explicação:
+
+O createReadStream() lê o arquivo em partes (chunks), sem carregar tudo na memória.
+O evento 'data' dispara cada vez que um novo pedaço é lido.
+O evento 'end' sinaliza o término da leitura. **/

@@ -1,0 +1,19 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Trabalhando com Streams para Leitura e Escrita Eficientes
+//Exemplo com Transform Streams (Compactação de Arquivo)
+
+const fs = require('fs');
+const zlib = require('zlib');
+const leituraStream = fs.createReadStream('arquivo.txt');
+const escritaStream = fs.createWriteStream('arquivo.txt.gz');
+const compressao = zlib.createGzip();
+leituraStream.pipe(compressao).pipe(escritaStream);
+escritaStream.on('finish', () => {
+    console.log("Arquivo compactado com sucesso!");
+});
+
+/**
+Explicação:
+
+O zlib.createGzip() transforma os dados em formato compactado Gzip.
+O .pipe() permite que os dados sejam lidos, compactados e escritos de forma contínua e eficiente.
+**/ 

@@ -1,0 +1,16 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Trabalhando com Streams para Leitura e Escrita Eficientes
+//Exemplo de Escrita com Writable Streams
+
+const fs = require('fs');
+const escritaStream = fs.createWriteStream('saida.txt');
+escritaStream.write("Escrevendo dados no arquivo...\n");
+escritaStream.write("Mais uma linha de texto...\n");
+escritaStream.end(() => {
+    console.log("Escrita finalizada!");
+});
+/**
+Explicação:
+
+O createWriteStream() cria um stream de escrita para saida.txt.
+O método .write() adiciona dados ao arquivo.
+O .end() finaliza o processo de escrita. **/

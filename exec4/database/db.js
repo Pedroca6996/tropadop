@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS appointments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT NOT NULL,
+  advogado TEXT NOT NULL,
+  data DATE NOT NULL,
+  hora TIME NOT NULL,
+  recorrencia TEXT NOT NULL
+);

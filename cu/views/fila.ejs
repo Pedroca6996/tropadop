@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fila de Atendimento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .status-aguardando { background-color: #f8d7da; } /* Light red */
+    .status-em-atendimento { background-color: #fff3cd; } /* Light yellow */
+    .status-atendido { background-color: #d4edda; } /* Light green */
+    .status-faltou { background-color: #f8d7da; } /* Light red */
+    .status-remarcado { background-color: #d1ecf1; } /* Light blue */
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container mt-5">
+    <h2>Fila de Atendimento</h2>
+
+    <% if (agendamentos.length === 0) { %>
+      <div class="alert alert-info" role="alert">
+        Não há atendimentos na fila.
+      </div>
+    <% } else { %>
+      <table class="table table-striped table-hover table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Cliente</th>
+            <th>Advogado</th>
+            <th>Data</th>
+            <th>Hora Marcada</th>
+            <th>Chegada Real</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% agendamentos.forEach(ag => { %>
+            <tr class="status-<%= ag.status.toLowerCase().replace(/ /g, '-') %>">
+              <td><%= ag.cliente_nome %></td>
+              <td><%= ag.advogado_nome %></td>
+              <td><%= ag.data %></td>
+              <td><%= ag.hora %></td>
+              <td>
+                <% if (ag.horario_chegada) { %>
+                  <%= ag.horario_chegada %>
+                <% } else { %>
+                  <form action="/fila/registrar-chegada/<%= ag.id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Registrar Chegada</button>
+                  </form>
+                <% } %>
+              </td>
+              <td><%= ag.tipo_atendimento %></td>
+              <td>
+                <span class="badge bg-<%= ag.status === 'Aguardando atendimento' ? 'warning' : ag.status === 'Em atendimento' ? 'info' : 'secondary' %>">
+                  <%= ag.status %>
+                </span>
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton<%= ag.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+                    Atualizar Status
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<%= ag.id %>">
+                    <li><button class="dropdown-item" onclick="updateStatus('<%= ag.id %>', 'Em atendimento')">Em Atendimento</button></li>
+                    <li><button class="dropdown-item" onclick="showRemarcarModal('<%= ag.id %>')">Remarcado</button></li>
+                    <li><button class="dropdown-item" onclick="updateStatus('<%= ag.id %>', 'Atendido')">Atendido</button></li>
+                    <li><button class="dropdown-item" onclick="updateStatus('<%= ag.id %>', 'Faltou')">Faltou</button></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+
+  <div class="modal fade" id="remarcarModal" tabindex="-1" aria-labelledby="remarcarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="remarcarForm" method="POST">
+          <div class="modal-header">
+            <h5 class="modal-title" id="remarcarModalLabel">Remarcar Atendimento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="remarcarAppointmentId" name="appointment_id">
+            <div class="mb-3">
+              <label for="nova_data" class="form-label">Nova Data</label>
+              <input type="date" class="form-control" id="nova_data" name="nova_data" required>
+            </div>
+            <div class="mb-3">
+              <label for="nova_hora" class="form-label">Nova Hora</label>
+              <input type="time" class="form-control" id="nova_hora" name="nova_hora" required>
+            </div>
+             <div class="mb-3">
+              <label for="tipo_atendimento_remarcado" class="form-label">Tipo de Atendimento</label>
+              <select id="tipo_atendimento_remarcado" name="tipo_atendimento" class="form-select" required>
+                <option value="">Selecione o tipo</option>
+                <option value="Consulta Inicial">Consulta Inicial</option>
+                <option value="Retorno">Retorno</option>
+                <option value="Audiência">Audiência</option>
+                <option value="Reunião">Reunião</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="observacoes_remarcado" class="form-label">Observações (opcional)</label>
+              <textarea class="form-control" id="observacoes_remarcado" name="observacoes" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Remarcar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <%- include('partials/footer') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateStatus(id, status) {
+      if (confirm(`Tem certeza que deseja mudar o status para "${status}"?`)) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/atendimento/status/${id}`;
+
+        const statusInput = document.createElement('input');
+        statusInput.type = 'hidden';
+        statusInput.name = 'status';
+        statusInput.value = status;
+        form.appendChild(statusInput);
+
+        // Adiciona campo de observações se for um status final
+        if (['Atendido', 'Faltou'].includes(status)) {
+            const observacoes = prompt("Adicione observações (opcional):");
+            if (observacoes !== null) { // Permite string vazia
+                const obsInput = document.createElement('input');
+                obsInput.type = 'hidden';
+                obsInput.name = 'observacoes';
+                obsInput.value = observacoes;
+                form.appendChild(obsInput);
+            }
+        }
+        
+        document.body.appendChild(form);
+        form.submit();
+      }
+    }
+
+    function showRemarcarModal(id) {
+      const modal = new bootstrap.Modal(document.getElementById('remarcarModal'));
+      document.getElementById('remarcarAppointmentId').value = id;
+      document.getElementById('remarcarForm').action = `/atendimento/remarcar/${id}`;
+      modal.show();
+    }
+  </script>
+</body>
+</html>

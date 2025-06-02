@@ -1,0 +1,19 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Manipulação de Eventos
+
+const EventEmitter = require('events');
+const sistema = new EventEmitter();
+// Listener para login
+sistema.on('login', (usuario) => {
+    console.log(`Usuário "${usuario}" fez login.`);
+});
+// Listener para logout
+sistema.on('logout', (usuario) => {
+    console.log(`Usuário "${usuario}" saiu.`);
+});
+// Emitindo eventos
+sistema.emit('login', 'Alice');
+sistema.emit('logout', 'Alice');
+
+//Saída esperada:
+//Usuário "Alice" fez login.
+//Usuário "Alice" saiu. 

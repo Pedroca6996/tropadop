@@ -1,0 +1,16 @@
+[
+  {
+    "nome": "Pedro",
+    "advogado": "Rafaell",
+    "data": "2027-09-03",
+    "hora": "19:00",
+    "recorrencia": "único"
+  },
+  {
+    "nome": "teste",
+    "advogado": "testesx",
+    "data": "2025-05-13",
+    "hora": "21:30",
+    "recorrencia": "recorrente"
+  }
+]

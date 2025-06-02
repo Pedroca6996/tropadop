@@ -1,0 +1,13 @@
+//Pedro Henrick de Oliveira Rosa - 31/03/2025 - Manipulação de Eventos
+
+const EventEmitter = require('events');
+const meuEmissor = new EventEmitter();
+// Evento que ocorre apenas uma vez
+meuEmissor.once('conectar', () => {
+    console.log("Conexão estabelecida!");
+});
+meuEmissor.emit('conectar'); // Executa
+meuEmissor.emit('conectar'); // Ignorado
+
+//Saída esperada:
+// Conexão estabelecida!

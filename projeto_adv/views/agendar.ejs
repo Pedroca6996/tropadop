@@ -1,0 +1,41 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<h2>Agendar Atendimento</h2>
+<form action="/agendar" method="POST" class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Nome do Cliente</label>
+    <input type="text" name="nome" class="form-control" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Advogado Responsável</label>
+    <select class="form-select" name="advogado" required>
+  <option value="" disabled selected>Selecione um advogado responsável</option>
+  <option value="ADV. Guilherme - Direito Trabalhista">ADV. Guilherme – Direito Trabalhista</option>
+  <option value="ADV. Leandro - Direito Criminal">ADV. Leandro – Direito Criminal</option>
+  <option value="ADV. Mariana - Direito Civil">ADV. Mariana – Direito Civil</option>
+  <option value="ADV. Rafael - Direito Empresarial">ADV. Rafael – Direito Empresarial</option>
+  <option value="ADV. Sofia - Direito de Família">ADV. Sofia – Direito de Família</option>
+</select>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Data</label>
+    <input type="date" name="data" class="form-control" required>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Hora</label>
+    <input type="time" name="hora" class="form-control" required>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Recorrente?</label>
+    <select name="recorrente" class="form-select">
+      <option value="Sim">Sim</option>
+      <option value="Não" selected>Não</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Agendar</button>
+  </div>
+</form>
+
+<%- include('partials/footer') %>

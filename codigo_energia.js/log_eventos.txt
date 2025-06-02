@@ -1,0 +1,2 @@
+[2025-04-07T23:04:41.969Z] Falha: Arquivo de entrada não encontrado. A energia não pode fluir!
+[2025-04-07T23:05:09.464Z] Falha: Arquivo de entrada não encontrado. A energia não pode fluir!
